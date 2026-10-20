@@ -9,27 +9,51 @@
 <body>
     <header>
         <h1>CYBER ICON HUB</h1>
-        <p>Нажми на иконку, чтобы скопировать ссылку</p>
+        <p id="subtitle">Нажми на иконку, чтобы скопировать ссылку</p>
     </header>
-    <div class="grid">
-        <div class="card" onclick="copyUrl('icons/android.png')">
-            <img src="icons/android.png" alt="Android"><span>Android</span>
-        </div>
-        <div class="card" onclick="copyUrl('icons/troll.png')">
-            <img src="icons/troll.png" alt="Troll"><span>TrollFace</span>
-        </div>
-        <div class="card" onclick="copyUrl('icons/powershell.png')">
-            <img src="icons/powershell.png" alt="PowerShell"><span>PowerShell</span>
-        </div>
-        <div class="card" onclick="copyUrl('icons/skull.png')">
-            <img src="icons/skull.png" alt="Skull"><span>Skull</span>
-        </div>
+    
+    <div class="grid" id="icon-grid">
+        <div class="card" onclick="copyUrl('icons/android.png')"><img src="icons/android.png"><span>Android</span></div>
+        <div class="card" onclick="copyUrl('icons/troll.png')"><img src="icons/troll.png"><span>TrollFace</span></div>
+        <div class="card" onclick="copyUrl('icons/powershell.png')"><img src="icons/powershell.png"><span>PowerShell</span></div>
+        <div class="card" onclick="copyUrl('icons/skull.png')"><img src="icons/skull.png"><span>Skull</span></div>
+        
+        <!-- НОВЫЕ СМАЙЛИКИ -->
+        <div class="card" onclick="copyUrl('icons/smiley_hacker.png')"><img src="icons/smiley_hacker.png"><span>Hacker</span></div>
+        <div class="card" onclick="copyUrl('icons/smiley_cool.png')"><img src="icons/smiley_cool.png"><span>Cool</span></div>
+        <div class="card" onclick="copyUrl('icons/smiley_devil.png')"><img src="icons/smiley_devil.png"><span>Devil</span></div>
+        <div class="card" onclick="copyUrl('icons/smiley_robot.png')"><img src="icons/smiley_robot.png"><span>Robot</span></div>
+        <div class="card" onclick="copyUrl('icons/smiley_angry.png')"><img src="icons/smiley_angry.png"><span>Angry</span></div>
     </div>
+
+    <div id="help-list" style="display:none; text-align:left; width: 90%; max-width: 800px; margin: 0 auto; background: rgba(0,255,204,0.1); padding: 20px; border-radius: 10px; font-size: 14px; word-break: break-all;"></div>
+
     <script>
+        // Проверяем, есть ли в ссылке ?help или ?list
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('help') || urlParams.has('list')) {
+            document.getElementById('subtitle').innerText = "СПИСОК ВСЕХ ССЫЛОК (Скопируй и вставь в консоль)";
+            document.getElementById('icon-grid').style.display = 'none';
+            const helpDiv = document.getElementById('help-list');
+            helpDiv.style.display = 'block';
+            
+            let links = [
+                'android.png', 'troll.png', 'powershell.png', 'skull.png', 
+                'smiley_hacker.png', 'smiley_cool.png', 'smiley_devil.png', 
+                'smiley_robot.png', 'smiley_angry.png'
+            ];
+            
+            let html = '<h3 style="color:#ff00ff; text-align:center;">КОМАНДЫ ДЛЯ КОНСОЛИ:</h3>';
+            links.forEach(link => {
+                let fullUrl = window.location.origin + '/icons/' + link;
+                html += `<div style="margin-bottom:10px;"><span style="color:#fff;">${link}</span><br><code style="color:#00ffcc;">icon ${fullUrl}</code></div>`;
+            });
+            helpDiv.innerHTML = html;
+        }
+
         function copyUrl(path) {
-            // Автоматически подставляет текущий домен (работает и локально, и на Cloudflare)
             let fullUrl = window.location.origin + '/' + path;
-            navigator.clipboard.writeText(fullUrl).then(() => {
+            navigator.clipboard.writeText('icon ' + fullUrl).then(() => {
                 alert('Скопировано! Вставь в консоль: icon ' + fullUrl);
             });
         }
