@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Icon Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>CYBER ICON HUB</h1>
+        <p>Нажми на иконку, чтобы скопировать ссылку</p>
+    </header>
+    <div class="grid">
+        <div class="card" onclick="copyUrl('icons/android.png')">
+            <img src="icons/android.png" alt="Android"><span>Android</span>
+        </div>
+        <div class="card" onclick="copyUrl('icons/troll.png')">
+            <img src="icons/troll.png" alt="Troll"><span>TrollFace</span>
+        </div>
+        <div class="card" onclick="copyUrl('icons/powershell.png')">
+            <img src="icons/powershell.png" alt="PowerShell"><span>PowerShell</span>
+        </div>
+        <div class="card" onclick="copyUrl('icons/skull.svg')">
+            <img src="icons/skull.svg" alt="Skull"><span>Skull</span>
+        </div>
+    </div>
+    <script>
+        function copyUrl(path) {
+            // Автоматически подставляет текущий домен (работает и локально, и на Cloudflare)
+            let fullUrl = window.location.origin + '/' + path;
+            navigator.clipboard.writeText(fullUrl).then(() => {
+                alert('Скопировано! Вставь в консоль: icon ' + fullUrl);
+            });
+        }
+    </script>
+</body>
+</html>
